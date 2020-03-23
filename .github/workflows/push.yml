@@ -1,0 +1,18 @@
+name: Java CD
+on:
+  push:
+    branches:
+    - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run deploy script
+      uses: maddox/actions/ssh@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+        USER: ${{ secrets.USER }}
+      with:
+        args: 'cd sf.dev && ./deploy.sh'
